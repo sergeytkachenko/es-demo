@@ -59,7 +59,7 @@ export class MainController {
 	searchFromElastic() {
 		let self = this;
 		let scope = this.$scope;
-		let url = `${this.hostName}/${this.indexName}/_search`;
+		let url = `${this.hostName}/${this.indexName}/contact/_search`;
 		this.$http.post(url, {
 			query: {
 				match: {
@@ -96,6 +96,9 @@ export class MainController {
 	}
 
 	onMessage(data) {
+		if (data.reset) {
+			return this.$scope.data = null;
+		}
 		this.$scope.data = data;
 		console.info(data);
 	}
