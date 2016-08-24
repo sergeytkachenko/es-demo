@@ -107,7 +107,7 @@ export class MainController {
 		if (data.reset) {
 			return this.$scope.data = null;
 		}
-		this.$scope.data = data;
+		this.$scope.data = angular.isArray(data) ? data : [];
 		this.$scope.resultCount = data ? data.length : 0;
 		this.$scope.time = (this.time - new Date());
 		this.$scope.$apply();
