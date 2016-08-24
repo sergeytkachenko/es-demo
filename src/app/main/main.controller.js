@@ -60,6 +60,9 @@ export class MainController {
 		let self = this;
 		let scope = this.$scope;
 		let url = `${this.hostName}/${this.indexName}/contact/_search`;
+		scope.searchTime = null;
+		scope.searchCount = null;
+		scope.data = null;
 		this.$http.post(url, {
 			query: {
 				match: {
