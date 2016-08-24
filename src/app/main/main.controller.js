@@ -82,7 +82,7 @@ export class MainController {
 			channel.send(`connect is ${userid}`);
 		};
 
-		channel.onmessage = () => this.onMessage();
+		channel.onmessage = (data) => this.onMessage(data);
 
 		channel.onleave = function (userid) {
 			console.log(userid);
