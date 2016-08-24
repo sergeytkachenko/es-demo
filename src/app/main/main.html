@@ -1,0 +1,68 @@
+<div class="container">
+    <form class="form-horizontal" style="margin-top: 20px;">
+        <button ng-click="channelOpen()">open chanel</button>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Поиск по вхождению</label>
+            <div class="col-sm-9">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="isContain" ng-change="search()">
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Поисковая система</label>
+            <div class="col-sm-9">
+                <select ng-model="engine" class="form-control"
+                        ng-change="search()"
+                        ng-options="engine.name for engine in engines">
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Выводить на страницу</label>
+            <div class="col-sm-9">
+                <select ng-model="size" class="form-control"
+                        ng-options="count for count in [3, 10, 20, 30, 40, 50, 75, 100]"
+                        ng-change="search()">
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Введите запрос</label>
+            <div class="col-sm-9">
+                <input class="form-control" placeholder="что искать?  нажмите Enter" ng-model="q" ng-enter="search()">
+            </div>
+        </div>
+    </form>
+    <div class="result">
+        <ul>
+            <li ng-if="q">
+                Запрос: <span>{{ q }}</span>
+            </li>
+            <li ng-if="searchTime !== null">
+                Время поиска: <span>{{ searchTime }} ms</span>
+            </li>
+            <li ng-if="searchCount !== null">
+                Найдено записей: <span>{{ searchCount }}</span>
+            </li>
+        </ul>
+
+        <div ng-repeat="item in data" ng-if="engine.id == 2">
+            <h3>{{ item['bpmonlinetable'] }}</h3>
+            <div ng-repeat="(key, value) in item">
+                <b>{{ key }}</b>: <span ng-bind-html="getHighlight(value)"></span>
+            </div>
+            <hr>
+        </div>
+
+        <div ng-repeat="item in data" ng-if="engine.id == 1">
+            <h3>{{ item['type'] }}</h3>
+            <div ng-repeat="(key, value) in item">
+                <b>{{ key }}</b>: <span ng-bind-html="getHighlight(value)"></span>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
