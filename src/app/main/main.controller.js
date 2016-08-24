@@ -57,10 +57,12 @@ export class MainController {
 	}
 
 	searchFromElastic() {
+		this.time = new Date();
 		let self = this;
 		let scope = this.$scope;
 		let url = `${this.hostName}/${this.indexName}/contact/_search`;
 		scope.searchTime = null;
+		scope.time = null;
 		scope.searchCount = null;
 		scope.data = null;
 		this.$http.post(url, {
@@ -103,6 +105,7 @@ export class MainController {
 			return this.$scope.data = null;
 		}
 		this.$scope.data = data;
+		this.$scope.time = (this.time - new Date());
 		this.$scope.$apply();
 	}
 
