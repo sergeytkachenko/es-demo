@@ -71,8 +71,8 @@ export class MainController {
 			let data = res.data;
 			scope.searchTime = data.took;
 			scope.searchCount = data.hits.total;
-			scope.data = self.decorateElasticData(data.hits.hits);
-			self.sendData(scope.data);
+			let esData = self.decorateElasticData(data.hits.hits);
+			self.sendData(esData);
 		});
 	}
 
