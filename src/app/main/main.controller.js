@@ -100,7 +100,7 @@ export class MainController {
 			return this.$scope.data = null;
 		}
 		this.$scope.data = data;
-		console.info(data);
+		this.$scope.$apply();
 	}
 
 	appendScripts() {
