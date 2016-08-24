@@ -10,7 +10,9 @@ export class MainController {
 		this.$timeout = $timeout;
 
 		$scope.searchCount = null;
+		$scope.resultCount = null;
 		$scope.searchTime = null;
+		$scope.time = null;
 
 		$scope.engines = [
 			{
@@ -60,10 +62,11 @@ export class MainController {
 		this.time = new Date();
 		let self = this;
 		let scope = this.$scope;
-		let url = `${this.hostName}/${this.indexName}/contact/_search`;
+		let url = `${this.hostName}/${this.indexName}/activity/_search`;
 		scope.searchTime = null;
 		scope.time = null;
 		scope.searchCount = null;
+		scope.resultCount = null;
 		scope.data = null;
 		this.$http.post(url, {
 			query: {
@@ -105,6 +108,7 @@ export class MainController {
 			return this.$scope.data = null;
 		}
 		this.$scope.data = data;
+		this.$scope.resultCount = data ? data.length : 0;
 		this.$scope.time = (this.time - new Date());
 		this.$scope.$apply();
 	}
