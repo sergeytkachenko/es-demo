@@ -47,9 +47,15 @@
             <li ng-if="searchCount !== null">
                 Найдено записей: <span>{{ searchCount }}</span>
             </li>
+            <li ng-if="resultCount !== null">
+                Найдено записей с учетом прав: <span>{{ resultCount }}</span>
+            </li>
+            <li ng-if="time !== null">
+                Время поиска с учетом прав: <span>{{ time }} ms</span>
+            </li>
         </ul>
 
-        <div ng-repeat="item in data">
+        <div ng-repeat="item in data track by $index">
             <h3>{{ item['type'] }}</h3>
             <div ng-repeat="(key, value) in item">
                 <b>{{ key }}</b>: <span>{{ value }}</span>
