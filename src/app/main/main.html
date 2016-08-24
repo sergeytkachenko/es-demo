@@ -49,18 +49,10 @@
             </li>
         </ul>
 
-        <div ng-repeat="item in data" ng-if="engine.id == 2">
-            <h3>{{ item['bpmonlinetable'] }}</h3>
-            <div ng-repeat="(key, value) in item">
-                <b>{{ key }}</b>: <span ng-bind-html="getHighlight(value)"></span>
-            </div>
-            <hr>
-        </div>
-
-        <div ng-repeat="item in data" ng-if="engine.id == 1">
+        <div ng-repeat="item in data">
             <h3>{{ item['type'] }}</h3>
             <div ng-repeat="(key, value) in item">
-                <b>{{ key }}</b>: <span ng-bind-html="getHighlight(value)"></span>
+                <b>{{ key }}</b>: <span>{{ value }}</span>
             </div>
             <hr>
         </div>

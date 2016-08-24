@@ -3,7 +3,8 @@ export class MainController {
 		'ngInject';
 
 		this.appendScripts();
-
+		this.hostName = 'http://localhost:9200';
+		this.indexName = 'demo';
 		this.$scope = $scope;
 		this.$http = $http;
 		this.$timeout = $timeout;
@@ -16,25 +17,19 @@ export class MainController {
 				id: 1,
 				method: 'searchFromElastic',
 				name: 'ElasticSearch'
-			},
-			/*{
-				id: 2,
-				method: 'searchFromSolr',
-				name: 'Solr'
-			}*/
+			}
 		];
 		$scope.engine = $scope.engines[0];
 		$scope.data = [];
 		$scope.size = 10;
 
 		$scope.search = () => this.search();
-		$scope.getHighlight = (value) => this.getHighlight(value);
 
-		$scope.channelOpen = function() {
+		$scope.channelOpen = function () {
 			window.channel.open();
 		};
 	}
-	
+
 	search() {
 		let method = this.$scope.engine.method;
 		if (!method || !this.$scope.q) {
@@ -64,11 +59,11 @@ export class MainController {
 	searchFromElastic() {
 		let self = this;
 		let scope = this.$scope;
-		let url = 'http://localhost:9200/demo/_search';
+		let url = `${this.hostName}/${this.indexName}/_search`;
 		this.$http.post(url, {
 			query: {
-				match : {
-					"_all" : this.getQuery()
+				match: {
+					"_all": this.getQuery()
 				}
 			},
 			size: scope.size
@@ -81,39 +76,8 @@ export class MainController {
 		});
 	}
 
-	searchFromSolr() {
-		let scope = this.$scope;
-		let url = `http://${location.hostname}:8983/solr/db/select?indent=on&wt=json`;
-		let params = `&q=${this.getQuery()}&rows=${scope.size}`;
-		this.$http.get(url + params)
-			.then((res) => {
-				let data = res.data;
-				scope.searchTime = data.responseHeader.QTime;
-				scope.searchCount = data.response.numFound;
-				scope.data = data.response.docs;
-			});
-	}
-
-	getHighlight(value) {
-		value += "";
-		var q = this.$scope.q.replace("\s{2,}", " ");
-		if (/\*/.test(q)) {
-			return value;
-		}
-		var words = q.split(" ");
-		for (let index in words) {
-			let word = words[index];
-			if (this.$scope.isContain) {
-				value = value.replace(new RegExp('(' + word + ')', 'gi'), '<b>$1</b>');
-			} else {
-				value = value.replace(new RegExp('([^a-z1-9])(' + word + ')([^a-z1-9])', 'gi'), '$1<b>$2</b>$3');
-			}
-		}
-		return value;
-	}
-
 	initRTCP() {
-		var channel = window.channel = new DataChannel();
+		var channel = window.channel = new window.DataChannel();
 		channel.onopen = function (userid) {
 			channel.send(`connect is ${userid}`);
 		};
@@ -137,7 +101,7 @@ export class MainController {
 	}
 
 	appendScripts() {
-		let url = '//cdn.webrtc-experiment.com/DataChannel.js';
+		let url = 'http://cdn.webrtc-experiment.com/DataChannel.js';
 		var script = document.createElement("script");
 		script.type = "text/javascript";
 		angular.element("head").append(script);
