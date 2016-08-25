@@ -62,7 +62,7 @@ export class MainController {
 		this.time = new Date();
 		let self = this;
 		let scope = this.$scope;
-		let url = `${this.hostName}/${this.indexName}/activity/_search`;
+		let url = `${this.hostName}/${this.indexName}/contact/_search`;
 		scope.searchTime = null;
 		scope.time = null;
 		scope.searchCount = null;
