@@ -109,7 +109,7 @@ export class MainController {
 		}
 		this.$scope.data = angular.isArray(data) ? data : [];
 		this.$scope.resultCount = data ? data.length : 0;
-		this.$scope.time = (this.time - new Date());
+		this.$scope.time = new Date() - this.time;
 		this.$scope.$apply();
 	}
 
